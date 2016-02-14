@@ -4,26 +4,19 @@
 Use the [server example](server.rb) as a guide on how to validate the JSON payload on [Push events](https://developer.github.com/v3/activity/events/types/#pushevent).
 
 ```ruby
-post '/payload' do
-  payload = JSON.parse(request.body.read, object_class: OpenStruct)
-
-  # update status to pending until completed
-  update_status(payload, :pending, "validating commits")
-
+# validate all commits are from the pusher
+def validate(payload)
   # read all committer emails
   committers = payload.commits.map{ |c| c.author.email }.uniq
 
   # validate all commits are from the pusher
-  params = if committers.count > 1
-    [:failure, "Includes commits from #{committers.count} committers"]
+  if committers.count > 1
+    :failure => "Includes commits from #{committers.count} committers"]
   elsif !committers.include?(payload.pusher.email)
-    [:failure, "Committer doesn't match pusher"]
+    :failure => "Committer doesn't match pusher"
   else
-    [:success, "All commits match pusher"]
+    :success => "All commits match pusher"
   end
-
-  # update github
-  update_status(payload, *params)
 end
 ```
 

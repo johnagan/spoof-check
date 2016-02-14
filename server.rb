@@ -12,9 +12,10 @@ HEADERS = {
 
 
 # Update the Status API
-def update_status(payload, state, message)
+def update_status(payload, status)
   sha = payload.after
   repo = payload.repository.full_name
+  state, description = status.first
 
   # setup http post
   uri = URI.parse("#{GITHUB_ROOT}/repos/#{repo}/statuses/#{sha}")
@@ -22,8 +23,24 @@ def update_status(payload, state, message)
   http.use_ssl = true
 
   # post to GitHub
-  params = {:state => state, :description => message, :context => "spoof check"}
+  params = {:state => state, :description => description, :context => "spoof check"}
   http.post(uri.path, params.to_json, HEADERS)
+end
+
+
+# validate all commits are from the pusher
+def validate(payload)
+  # read all committer emails
+  committers = payload.commits.map{ |c| c.author.email }.uniq
+
+  # validate all commits are from the pusher
+  if committers.count > 1
+    :failure => "Includes commits from #{committers.count} committers"]
+  elsif !committers.include?(payload.pusher.email)
+    :failure => "Committer doesn't match pusher"
+  else
+    :success => "All commits match pusher"
+  end
 end
 
 
@@ -34,18 +51,6 @@ post '/payload' do
   # update status to pending until completed
   update_status(payload, :pending, "validating commits")
 
-  # read all committer emails
-  committers = payload.commits.map{ |c| c.author.email }.uniq
-
-  # validate all commits are from the pusher
-  params = if committers.count > 1
-    [:failure, "Includes commits from #{committers.count} committers"]
-  elsif !committers.include?(payload.pusher.email)
-    [:failure, "Committer doesn't match pusher"]
-  else
-    [:success, "All commits match pusher"]
-  end
-
   # update github
-  update_status(payload, *params)
+  update_status(payload, validate(payload))
 end
