@@ -51,6 +51,6 @@ post '/payload' do
   # update status to pending until completed
   update_status(payload, :pending => "validating commits")
 
-  # update github
+  # update GitHub
   update_status(payload, validate(payload))
 end
