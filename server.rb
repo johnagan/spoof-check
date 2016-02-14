@@ -49,7 +49,7 @@ post '/payload' do
   payload = JSON.parse(request.body.read, object_class: OpenStruct)
 
   # update status to pending until completed
-  update_status(payload, :pending, "validating commits")
+  update_status(payload, :pending => "validating commits")
 
   # update github
   update_status(payload, validate(payload))
