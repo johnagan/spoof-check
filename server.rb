@@ -35,11 +35,11 @@ def validate(payload)
 
   # validate all commits are from the pusher
   if committers.count > 1
-    :failure => "Includes commits from #{committers.count} committers"]
+    {:failure => "Includes commits from #{committers.count} committers"}
   elsif !committers.include?(payload.pusher.email)
-    :failure => "Committer doesn't match pusher"
+    {:failure => "Committer doesn't match pusher"}
   else
-    :success => "All commits match pusher"
+    {:success => "All commits match pusher"}
   end
 end
 
