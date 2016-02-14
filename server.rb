@@ -3,8 +3,8 @@ require 'sinatra'
 require 'json'
 require 'uri'
 
+CONTEXT = "spoof check"
 GITHUB_ROOT = "https://api.github.com"
-
 HEADERS = {
   'Content-Type' => 'text/json',
   'Authorization' => "token #{ENV['GITHUB_TOKEN']}"
@@ -23,7 +23,7 @@ def update_status(payload, status)
   http.use_ssl = true
 
   # post to GitHub
-  params = {:state => state, :description => description, :context => "spoof check"}
+  params = {:state => state, :description => description, :context => CONTEXT}
   http.post(uri.path, params.to_json, HEADERS)
 end
 
