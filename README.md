@@ -1,7 +1,7 @@
 # Validate A GitHub Pusher
 
 ## Create A Server
-Use the [server example](server.rb) as a guide on how to validate the JSON payload on [Push events](https://developer.github.com/v3/activity/events/types/#pushevent).
+Use the [server example](server.rb) as a guide on how to validate the JSON payload on [Push events](https://developer.github.com/v3/activity/events/types/#pushevent). Add the validation to your CI server or any stand-alone webserver that responds to [GitHub's WebHook events](https://developer.github.com/webhooks/).
 
 ```ruby
 # validate all commits are from the pusher
@@ -19,8 +19,6 @@ def validate(payload)
   end
 end
 ```
-
-Add the validation to your CI server or any stand-alone webserver that responds to [GitHub's WebHook events](https://developer.github.com/webhooks/).
 
 
 ## Validate the WebHook Payload
