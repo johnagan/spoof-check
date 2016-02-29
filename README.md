@@ -35,7 +35,7 @@ The payload also contains the [Pusher's Info](https://gist.github.com/gjtorikian
 ## Configure the WebHook
 [Create a Webhook](https://developer.github.com/webhooks/) and watch for the [Push Event](https://developer.github.com/v3/activity/events/types/#pushevent). This event is triggered when you push from the command-line or commit a change through the Web UI.
 
-![](https://cloud.githubusercontent.com/assets/35968/13031597/e8aed22c-d287-11e5-9f98-5b9c5d960166.png)
+![](https://cloud.githubusercontent.com/assets/3476612/13388997/9463c3f0-de79-11e5-9b89-d5b3ebf18a2a.png)
 
 
 ## Protect the Master Branch
