@@ -41,4 +41,4 @@ The payload also contains the [Pusher's Info](https://gist.github.com/gjtorikian
 ## Protect the Master Branch
 To prevent merges until identity checks are passed, enable [Protected Branches](https://help.github.com/articles/configuring-protected-branches/) and [Required Status Checks](https://help.github.com/articles/enabling-required-status-checks/), then have your CI server run checks against the JSON payload delivered from the Webhook.
 
-![](https://cloud.githubusercontent.com/assets/35968/12996113/9eb5fd00-d0e1-11e5-8be1-b458d359e8ef.png)
+![](https://cloud.githubusercontent.com/assets/3476612/13436701/68e0878c-df95-11e5-8228-9b39c3410863.png)
